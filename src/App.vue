@@ -25,15 +25,14 @@ a
 <template>
 	<div id="app">
 		<Navigation/>
-		<vueTabRouter />
+		<tab-router-view />
 	</div>
 </template>
 
 <script>
 import Navigation from './components/navigation.vue'
-import vueTabRouter from '@/vue-tab-router/tab-router.js'
 export default {
 	name: 'App',
-	components: {Navigation, vueTabRouter}
+	components: {Navigation}
 }
 </script>

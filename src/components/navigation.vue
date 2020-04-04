@@ -26,10 +26,10 @@
 </style>
 <template>
 	<div class="navigation">
-		<router-link
+		<tab-router-link
 			to="/"
 			class="nav-logo"
-		>邮箱管理系统</router-link>
+		>邮箱管理系统</tab-router-link>
 		<div class="nav-list">
 			<div class="nav-list-body">
 				<router-link

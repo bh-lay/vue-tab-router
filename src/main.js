@@ -3,9 +3,11 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import vueTabRouter from './vue-tab-router/index.js'
 
 Vue.config.productionTip = false
 
+Vue.use(vueTabRouter)
 /* eslint-disable no-new */
 new Vue({
 	el: '#app',
