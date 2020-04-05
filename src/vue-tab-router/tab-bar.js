@@ -49,7 +49,13 @@ export default {
 									this.removeItem(index)
 									event.preventDefault()
 								}
-							}
+							},
+							directives: [
+								{
+									name: 'show',
+									value: this.list.length > 1
+								}
+							]
 						},
 						['×']
 					)

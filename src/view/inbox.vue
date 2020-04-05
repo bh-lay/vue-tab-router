@@ -30,13 +30,12 @@ export default {
 	name: 'inbox-page',
 	data () {
 		return {
-			pageIndex: parseInt(this.$tabRoute.query.page, 10),
+			pageIndex: parseInt(this.$tabRoute.query.page, 10) || 1,
 			pageItemCount: 10,
 			mailList: []
 		}
 	},
 	mounted () {
-		console.log('vm', this)
 		this.getList()
 	},
 	methods: {

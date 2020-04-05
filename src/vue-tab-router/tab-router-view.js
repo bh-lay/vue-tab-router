@@ -115,7 +115,6 @@ export default {
 				// 链接地址与已存在的 tab 地址不一致时
 				if (route.fullPath !== targetTab.fullPath) {
 					// 是否配置了值了强制刷新
-					console.log('forceRefresh', forceRefresh)
 					if (forceRefresh) {
 						// 更新 tab 数据
 						targetTab.fullPath = route.fullPath

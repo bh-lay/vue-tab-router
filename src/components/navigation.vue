@@ -3,12 +3,24 @@
 	width 200px
 	.nav-logo
 		display block
-		margin 40px 20px 20px
-		padding 15px 18px
+		margin-bottom 20px
+		padding 30px 20px 20px
 		background #0d9af2
 		font-weight bold
-		font-size 16px
+		font-size 18px
 		color #fff
+	.write-email
+		display block
+		margin 20px 10px
+		padding 10px 15px
+		background #abb2ba
+		border 1px solid #c7cbd1
+		font-weight bold
+		font-size 16px
+		color #16191d
+		transition .15s
+		&:hover
+			background #fff
 	.nav-list
 		padding 15px
 		a
