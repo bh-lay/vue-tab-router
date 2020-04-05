@@ -29,6 +29,11 @@
 			to="/"
 			class="nav-logo"
 		>邮箱管理系统</tab-router-link>
+		<tab-router-link
+			:to="'/mail/new/' + newMailID"
+			class="write-email"
+			@router-change="routerChange"
+		>写信</tab-router-link>
 		<div class="nav-list">
 			<tab-router-link
 				v-for="nav in navList"
@@ -63,10 +68,14 @@ export default {
 					href: '/outbox/',
 					target: 'outbox'
 				}
-			]
+			],
+			newMailID: 1
 		}
 	},
 	methods: {
+		routerChange () {
+			this.newMailID++
+		}
 	}
 }
 </script>

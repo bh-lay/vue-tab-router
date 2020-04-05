@@ -37,6 +37,9 @@ export default {
 	},
 	render (h) {
 		let vm = this
+		function successCallback () {
+			vm.$emit('router-change')
+		}
 		return h(
 			'a',
 			{
@@ -54,9 +57,9 @@ export default {
 								cacheType: vm.cacheType
 							})
 							if (vm.replace) {
-								vm.$router.replace(vm.to, emptyCallback, emptyCallback)
+								vm.$router.replace(vm.to, successCallback, emptyCallback)
 							} else {
-								vm.$router.push(vm.to, emptyCallback, emptyCallback)
+								vm.$router.push(vm.to, successCallback, emptyCallback)
 							}
 						}
 					}

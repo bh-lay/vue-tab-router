@@ -1,3 +1,4 @@
+import {setNextData} from './tab-pre-storage.js'
 export default {
 	name: 'tab-router-bar',
 	props: {
@@ -74,8 +75,15 @@ export default {
 				} else {
 					newIndex = -1
 				}
-				let nextPath = newIndex > -1 ? this.list[newIndex].path : this.defaultRoutePath
-				this.$router.push(nextPath)
+				if (newIndex > -1) {
+					let nextTab = this.list[newIndex]
+					setNextData({
+						target: nextTab.name,
+						forceRefresh: false
+					})
+					this.$router.replace(nextTab.path)
+				} else {
+				}
 			}
 			this.list.splice(index, 1)
 		}
