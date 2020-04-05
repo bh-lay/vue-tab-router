@@ -1,5 +1,6 @@
 import {setNextData} from './tab-pre-storage.js'
 
+let emptyCallback = () => {}
 class TabRouter {
 	constructor (tabData, $router) {
 		this.tabData = tabData
@@ -13,13 +14,13 @@ class TabRouter {
 			cacheType: this.tabData.cacheType
 		})
 	}
-	push (location) {
+	push (location, onComplete, onAbort) {
 		this.setNextData()
-		this.$router.push(location)
+		this.$router.push(location, onComplete || emptyCallback, onAbort || emptyCallback)
 	}
-	replace (location) {
+	replace (location, onComplete, onAbort) {
 		this.setNextData()
-		this.$router.replace(location)
+		this.$router.replace(location, onComplete || emptyCallback, onAbort || emptyCallback)
 	}
 }
 export default TabRouter
