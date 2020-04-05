@@ -119,6 +119,7 @@ export default {
 						// 更新 tab 数据
 						targetTab.fullPath = route.fullPath
 						targetTab.query = route.query
+						targetTab.params = route.params
 					} else {
 						// 修正为原地址
 						this.$router.replace(targetTab.fullPath)
@@ -134,7 +135,7 @@ export default {
 			}
 		},
 		createNewTab (route, {tabName, tabTitle, cacheType}) {
-			let { path, query, fullPath, meta, matched } = route
+			let { path, query, fullPath, meta, matched, params } = route
 
 			let matchedRoute = matched ? matched[matched.length - 1] : null
 			if (!matchedRoute) {
@@ -144,6 +145,7 @@ export default {
 				name: tabName,
 				path,
 				query,
+				params,
 				fullPath,
 				title: tabTitle || meta.tabTitle || '无标题',
 				cacheType,

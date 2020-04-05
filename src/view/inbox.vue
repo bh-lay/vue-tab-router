@@ -60,7 +60,6 @@ export default {
 		'$tabRoute.query' (query) {
 			this.pageIndex = parseInt(query.page, 10) || 1
 			this.getList()
-			console.log('query', query)
 		}
 	}
 }
