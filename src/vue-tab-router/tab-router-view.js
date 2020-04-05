@@ -1,6 +1,7 @@
 import './style.styl'
 import tabList from './tab-bar.js'
 import tabPreStorage from './tab-pre-storage.js'
+import TabRouter from './tab-router.js'
 
 export default {
 	name: 'tab-router-view',
@@ -18,7 +19,7 @@ export default {
 		let noCacheElement = null
 
 		const createTabElement = (tabItem, options) => {
-			return h(tabItem.components, {
+			return h(tabItem._components, {
 				class: ['router-view', tabItem.cacheType],
 				directives: options ? options.directives : undefined,
 				props: {
@@ -144,9 +145,10 @@ export default {
 				fullPath,
 				title: tabTitle || meta.tabTitle || '无标题',
 				cacheType,
-				components: {
+				_components: {
 					beforeCreate () {
 						this.$tabRoute = tabItem
+						this.$tabRouter = new TabRouter(tabItem, this.$router)
 					},
 					extends: matchedRoute.components.default
 				}

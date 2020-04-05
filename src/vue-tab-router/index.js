@@ -11,6 +11,7 @@ export default {
 				let parentVM = this.$options.parent
 				if (parentVM && parentVM.$tabRoute && !this.$tabRoute) {
 					this.$tabRoute = parentVM.$tabRoute
+					this.$tabRouter = parentVM.$tabRouter
 				}
 			}
 		})

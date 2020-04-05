@@ -53,15 +53,16 @@ export default {
 			this.$router.push('/inbox?page=' + (this.pageIndex - 1))
 		},
 		nextPage () {
-			this.$router.push('/inbox?page=' + (this.pageIndex + 1))
-		}
-	},
-	watch: {
-		$route (route) {
-			this.pageIndex = parseInt(route.query.page, 10) || 1
-			this.getList()
-			console.log('route', route)
+			this.$tabRouter.push('/inbox?page=' + (this.pageIndex + 1))
 		}
 	}
+	// ,
+	// watch: {
+	// 	$tabRoute (route) {
+	// 		// this.pageIndex = parseInt(route.query.page, 10) || 1
+	// 		// this.getList()
+	// 		console.log('route', route)
+	// 	}
+	// }
 }
 </script>
