@@ -4,18 +4,12 @@ class TabRouter {
 	constructor (tabData, $router) {
 		this.tabData = tabData
 		this.$router = $router
-
-		// if (vm.replace) {
-		// 	vm.$router.replace(vm.to)
-		// } else {
-		// 	vm.$router.push(vm.to)
-		// }
 	}
 	setNextData () {
 		setNextData({
 			target: this.tabData.name,
 			tabTitle: this.tabData.title,
-			forceRefesh: true,
+			forceRefresh: true,
 			cacheType: this.tabData.cacheType
 		})
 	}

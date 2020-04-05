@@ -16,6 +16,7 @@
 		{{mailItem}}
 		</div>
 	</div>
+	{{$tabRoute.query}}
 	<div>
 		<button @click="prevPage">下一页</button>
 		{{pageIndex}}
@@ -29,7 +30,7 @@ export default {
 	name: 'inbox-page',
 	data () {
 		return {
-			pageIndex: 1,
+			pageIndex: parseInt(this.$tabRoute.query.page, 10),
 			pageItemCount: 10,
 			mailList: []
 		}
@@ -50,19 +51,18 @@ export default {
 			})
 		},
 		prevPage () {
-			this.$router.push('/inbox?page=' + (this.pageIndex - 1))
+			this.$tabRouter.push('/inbox?page=' + (this.pageIndex - 1))
 		},
 		nextPage () {
 			this.$tabRouter.push('/inbox?page=' + (this.pageIndex + 1))
 		}
+	},
+	watch: {
+		'$tabRoute.query' (query) {
+			this.pageIndex = parseInt(query.page, 10) || 1
+			this.getList()
+			console.log('query', query)
+		}
 	}
-	// ,
-	// watch: {
-	// 	$tabRoute (route) {
-	// 		// this.pageIndex = parseInt(route.query.page, 10) || 1
-	// 		// this.getList()
-	// 		console.log('route', route)
-	// 	}
-	// }
 }
 </script>

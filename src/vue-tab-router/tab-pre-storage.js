@@ -6,7 +6,7 @@ Object.defineProperty(tabPreStorage, 'next', {
 		let data = this.data || {
 			target: '_blank',
 			tabTitle: '',
-			forceRefesh: false,
+			forceRefresh: false,
 			cacheType: ''
 		}
 		this.data = null
@@ -14,10 +14,12 @@ Object.defineProperty(tabPreStorage, 'next', {
 		return data
 	}
 })
-export function setNextData ({target, tabTitle}) {
+export function setNextData ({target, tabTitle, forceRefresh, cacheType}) {
 	tabPreStorage.data = {
 		target,
-		tabTitle
+		tabTitle,
+		forceRefresh,
+		cacheType
 	}
 }
 export default tabPreStorage

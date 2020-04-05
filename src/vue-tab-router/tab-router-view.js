@@ -1,3 +1,4 @@
+import Vue from 'vue'
 import './style.styl'
 import tabList from './tab-bar.js'
 import tabPreStorage from './tab-pre-storage.js'
@@ -20,6 +21,7 @@ export default {
 
 		const createTabElement = (tabItem, options) => {
 			return h(tabItem._components, {
+				key: tabItem.name,
 				class: ['router-view', tabItem.cacheType],
 				directives: options ? options.directives : undefined,
 				props: {
@@ -96,7 +98,7 @@ export default {
 			return null
 		},
 		handleRouteChange (route) {
-			let {target, forceRefesh, tabTitle, cacheType} = tabPreStorage.next
+			let {target, forceRefresh, tabTitle, cacheType} = tabPreStorage.next
 
 			// 是否已经定于了 target name
 			let hasDefineTargetName = target && target !== '_blank'
@@ -113,7 +115,8 @@ export default {
 				// 链接地址与已存在的 tab 地址不一致时
 				if (route.fullPath !== targetTab.fullPath) {
 					// 是否配置了值了强制刷新
-					if (forceRefesh) {
+					console.log('forceRefresh', forceRefresh)
+					if (forceRefresh) {
 						// 更新 tab 数据
 						targetTab.fullPath = route.fullPath
 						targetTab.query = route.query
@@ -147,7 +150,8 @@ export default {
 				cacheType,
 				_components: {
 					beforeCreate () {
-						this.$tabRoute = tabItem
+						// 定义响应式数据
+						Vue.util.defineReactive(this, '$tabRoute', tabItem)
 						this.$tabRouter = new TabRouter(tabItem, this.$router)
 					},
 					extends: matchedRoute.components.default

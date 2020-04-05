@@ -14,7 +14,7 @@ function guardEvent (e) {
 	}
 	return true
 }
-
+let emptyCallback = () => {}
 export default {
 	name: 'tab-router-link',
 	props: {
@@ -28,7 +28,7 @@ export default {
 			// _blank、[name]
 			default: '_blank'
 		},
-		forceRefesh: {
+		forceRefresh: {
 			type: Boolean,
 			default: false
 		},
@@ -50,13 +50,13 @@ export default {
 							setNextData({
 								target: vm.target,
 								tabTitle: vm.tabTitle,
-								forceRefesh: vm.forceRefesh,
+								forceRefresh: vm.forceRefresh,
 								cacheType: vm.cacheType
 							})
 							if (vm.replace) {
-								vm.$router.replace(vm.to)
+								vm.$router.replace(vm.to, emptyCallback, emptyCallback)
 							} else {
-								vm.$router.push(vm.to)
+								vm.$router.push(vm.to, emptyCallback, emptyCallback)
 							}
 						}
 					}
