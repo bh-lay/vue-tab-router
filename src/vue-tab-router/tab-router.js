@@ -1,5 +1,6 @@
 import './style.styl'
 import tabList from './tab-list.vue'
+import tabPreStorage from './tab-pre-storage.js'
 
 export default {
 	name: 'tab-router',
@@ -88,41 +89,6 @@ export default {
 		)
 	},
 	methods: {
-		handleRouteChange (route) {
-			let { path, query, meta, matched } = route
-			this.opendTab = this.getTabInOpendList('path', path)
-			if (this.opendTab) {
-				if (route.fullPath !== this.opendTab.fullPath) {
-					if (Object.keys(route.query).length === 0) {
-						this.$router.replace(this.opendTab.fullPath)
-					} else {
-						this.opendTab.fullPath = route.fullPath
-						this.opendTab.query = route.query
-					}
-				}
-				return
-			}
-			console.log('route', route)
-			let matchedRoute = matched ? matched[matched.length - 1] : null
-			if (!matchedRoute) {
-				throw new Error('路由缺失，请补全！')
-			}
-			console.log('matchedRoute.components.default', matchedRoute.components.default)
-			let tabItem = {
-				id: this.maxTabID++,
-				path,
-				query,
-				fullPath: route.fullPath,
-				title: meta.title,
-				cacheType: (meta.tabCache || '').match(/^(nocache|keep-alive|alive)$/)
-					? meta.tabCache
-					: 'keep-alive',
-				components: matchedRoute.components.default
-			}
-
-			this.opendTabList.push(tabItem)
-			this.opendTab = tabItem
-		},
 		getTabInOpendList (key, value) {
 			for (let i = 0; i < this.opendTabList.length; i++) {
 				if (this.opendTabList[i][key] === value) {
@@ -130,6 +96,58 @@ export default {
 				}
 			}
 			return null
+		},
+		handleRouteChange (route) {
+			let {target, forceRefesh, title, cacheType} = tabPreStorage.next
+
+			// 是否已经定于了 target name
+			let hasDefineTargetName = target && target !== '_blank' && target !== '_current'
+			let tabName = hasDefineTargetName ? target : this.maxTabID++
+			let tabInOpendList = this.getTabInOpendList('name', tabName)
+			// 定义了 target name，且已经打开过
+			if (hasDefineTargetName && tabInOpendList) {
+				// 链接地址与已存在的 tab 地址不一致时
+				if (route.fullPath !== tabInOpendList.fullPath) {
+					// 是否配置了值了强制刷新
+					if (forceRefesh) {
+						// 更新 tab 数据
+						tabInOpendList.fullPath = route.fullPath
+						tabInOpendList.query = route.query
+					} else {
+						// 修正为原地址
+						this.$router.replace(tabInOpendList.fullPath)
+					}
+				}
+				this.opendTab = tabInOpendList
+				return
+			} else if (target === '_current') {
+			} else {
+				this.createNewTab(route, {
+					name: tabName,
+					cacheType,
+					title
+				})
+			}
+		},
+		createNewTab (route, {name, title, cacheType}) {
+			let { path, query, fullPath, matched } = route
+
+			let matchedRoute = matched ? matched[matched.length - 1] : null
+			if (!matchedRoute) {
+				throw new Error('路由缺失，请补全！')
+			}
+			let tabItem = {
+				name,
+				path,
+				query,
+				fullPath,
+				title,
+				cacheType,
+				components: matchedRoute.components.default
+			}
+
+			this.opendTabList.push(tabItem)
+			this.opendTab = tabItem
 		}
 	},
 	beforeDestroy () {
