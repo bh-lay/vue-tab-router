@@ -18,7 +18,7 @@ export default new Router({
 			name: 'index',
 			component: Index,
 			meta: {
-				title: '控制台'
+				tabTitle: '控制台'
 			}
 		},
 		{
@@ -26,7 +26,7 @@ export default new Router({
 			name: 'inbox',
 			component: Inbox,
 			meta: {
-				title: '收件箱'
+				tabTitle: '收件箱'
 			}
 		},
 		{
@@ -34,7 +34,7 @@ export default new Router({
 			name: 'outbox',
 			component: Outbox,
 			meta: {
-				title: '发件箱'
+				tabTitle: '发件箱'
 			}
 		}
 	]

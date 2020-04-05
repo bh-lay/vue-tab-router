@@ -1,6 +1,5 @@
-<script>
 export default {
-	name: 'page-tab-list',
+	name: 'tab-router-bar',
 	props: {
 		list: {
 			type: Array,
@@ -82,4 +81,3 @@ export default {
 		}
 	}
 }
-</script>

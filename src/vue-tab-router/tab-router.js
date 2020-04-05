@@ -1,5 +1,5 @@
 import './style.styl'
-import tabList from './tab-list.vue'
+import tabList from './tab-bar.js'
 import tabPreStorage from './tab-pre-storage.js'
 
 export default {
@@ -98,11 +98,11 @@ export default {
 			return null
 		},
 		handleRouteChange (route) {
-			let {target, forceRefesh, title, cacheType} = tabPreStorage.next
+			let {target, forceRefesh, tabTitle, cacheType} = tabPreStorage.next
 
 			// 是否已经定于了 target name
-			let hasDefineTargetName = target && target !== '_blank' && target !== '_current'
-			let tabName = hasDefineTargetName ? target : this.maxTabID++
+			let hasDefineTargetName = target && target !== '_blank'
+			let tabName = hasDefineTargetName ? target : String(this.maxTabID++)
 			let tabInOpendList = this.getTabInOpendList('name', tabName)
 			// 定义了 target name，且已经打开过
 			if (hasDefineTargetName && tabInOpendList) {
@@ -120,17 +120,16 @@ export default {
 				}
 				this.opendTab = tabInOpendList
 				return
-			} else if (target === '_current') {
 			} else {
 				this.createNewTab(route, {
 					name: tabName,
 					cacheType,
-					title
+					tabTitle
 				})
 			}
 		},
-		createNewTab (route, {name, title, cacheType}) {
-			let { path, query, fullPath, matched } = route
+		createNewTab (route, {name, tabTitle, cacheType}) {
+			let { path, query, fullPath, meta, matched } = route
 
 			let matchedRoute = matched ? matched[matched.length - 1] : null
 			if (!matchedRoute) {
@@ -141,7 +140,7 @@ export default {
 				path,
 				query,
 				fullPath,
-				title,
+				title: tabTitle || meta.tabTitle || '无标题',
 				cacheType,
 				components: matchedRoute.components.default
 			}

@@ -25,7 +25,7 @@ export default {
 		},
 		target: {
 			type: String,
-			// _blank、_current、[name]
+			// _blank、[name]
 			default: '_blank'
 		},
 		forceRefesh: {
@@ -49,7 +49,7 @@ export default {
 						if (guardEvent(event)) {
 							setNextData({
 								target: vm.target,
-								title: vm.tabTitle,
+								tabTitle: vm.tabTitle,
 								forceRefesh: vm.forceRefesh,
 								cacheType: vm.cacheType
 							})
