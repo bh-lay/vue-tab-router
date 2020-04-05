@@ -35,6 +35,7 @@ export default {
 		}
 	},
 	mounted () {
+		console.log('vm', this)
 		this.getList()
 	},
 	methods: {

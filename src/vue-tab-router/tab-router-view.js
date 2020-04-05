@@ -3,7 +3,7 @@ import tabList from './tab-bar.js'
 import tabPreStorage from './tab-pre-storage.js'
 
 export default {
-	name: 'tab-router',
+	name: 'tab-router-view',
 	components: { tabList },
 	data () {
 		return {
@@ -18,7 +18,7 @@ export default {
 		let noCacheElement = null
 
 		const createTabElement = (tabItem, options) => {
-			let tabItemVNode = h(tabItem.components, {
+			return h(tabItem.components, {
 				class: ['router-view', tabItem.cacheType],
 				directives: options ? options.directives : undefined,
 				props: {
@@ -31,9 +31,6 @@ export default {
 					}
 				}
 			})
-			tabItemVNode.context.$tabRoute = tabItem
-			console.log('tabItemVM', tabItemVNode)
-			return tabItemVNode
 		}
 		this.opendTabList.forEach(tabItem => {
 			switch (tabItem.cacheType) {
@@ -102,33 +99,38 @@ export default {
 
 			// 是否已经定于了 target name
 			let hasDefineTargetName = target && target !== '_blank'
-			let tabName = hasDefineTargetName ? target : String(this.maxTabID++)
-			let tabInOpendList = this.getTabInOpendList('name', tabName)
-			// 定义了 target name，且已经打开过
-			if (hasDefineTargetName && tabInOpendList) {
+			let tabName = hasDefineTargetName ? target : route.meta.tabName
+			let targetTab = null
+
+			if (tabName) {
+				targetTab = this.getTabInOpendList('name', tabName)
+			} else {
+				tabName = String(this.maxTabID++)
+			}
+			// 若已经打开过
+			if (targetTab) {
 				// 链接地址与已存在的 tab 地址不一致时
-				if (route.fullPath !== tabInOpendList.fullPath) {
+				if (route.fullPath !== targetTab.fullPath) {
 					// 是否配置了值了强制刷新
 					if (forceRefesh) {
 						// 更新 tab 数据
-						tabInOpendList.fullPath = route.fullPath
-						tabInOpendList.query = route.query
+						targetTab.fullPath = route.fullPath
+						targetTab.query = route.query
 					} else {
 						// 修正为原地址
-						this.$router.replace(tabInOpendList.fullPath)
+						this.$router.replace(targetTab.fullPath)
 					}
 				}
-				this.opendTab = tabInOpendList
-				return
+				this.opendTab = targetTab
 			} else {
 				this.createNewTab(route, {
-					name: tabName,
+					tabName,
 					cacheType,
 					tabTitle
 				})
 			}
 		},
-		createNewTab (route, {name, tabTitle, cacheType}) {
+		createNewTab (route, {tabName, tabTitle, cacheType}) {
 			let { path, query, fullPath, meta, matched } = route
 
 			let matchedRoute = matched ? matched[matched.length - 1] : null
@@ -136,13 +138,18 @@ export default {
 				throw new Error('路由缺失，请补全！')
 			}
 			let tabItem = {
-				name,
+				name: tabName,
 				path,
 				query,
 				fullPath,
 				title: tabTitle || meta.tabTitle || '无标题',
 				cacheType,
-				components: matchedRoute.components.default
+				components: {
+					beforeCreate () {
+						this.$tabRoute = tabItem
+					},
+					extends: matchedRoute.components.default
+				}
 			}
 
 			this.opendTabList.push(tabItem)

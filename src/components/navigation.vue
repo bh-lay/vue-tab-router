@@ -20,8 +20,7 @@
 			color #fff
 			text-decoration none
 			transition .2s
-			&.sub-page.router-link-active,
-			&.index-page.router-link-exact-active
+			&.tab-router-link-active
 				color #007fff
 </style>
 <template>
@@ -31,18 +30,13 @@
 			class="nav-logo"
 		>邮箱管理系统</tab-router-link>
 		<div class="nav-list">
-			<div class="nav-list-body">
-				<router-link
-					to="/index"
-					class="index-page"
-				></router-link>
-				<router-link
-					v-for="nav in navList"
-					:key="nav.href"
-					:to="nav.href"
-					class="sub-page"
-				>{{nav.label}}</router-link>
-			</div>
+			<tab-router-link
+				v-for="nav in navList"
+				:key="nav.href"
+				:to="nav.href"
+				:target="nav.target"
+				:tabTitle="nav.label"
+			>{{nav.label}}</tab-router-link>
 		</div>
 	</div>
 </template>
@@ -56,15 +50,18 @@ export default {
 			navList: [
 				{
 					label: '控制台',
-					href: '/index'
+					href: '/index',
+					target: 'index'
 				},
 				{
 					label: '收件箱',
-					href: '/inbox'
+					href: '/inbox',
+					target: 'inbox'
 				},
 				{
 					label: '发件箱',
-					href: '/outbox/'
+					href: '/outbox/',
+					target: 'outbox'
 				}
 			]
 		}
