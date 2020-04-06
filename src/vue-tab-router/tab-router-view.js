@@ -3,6 +3,7 @@ import './style.styl'
 import tabList from './tab-bar.js'
 import tabPreStorage from './tab-pre-storage.js'
 import TabRouter from './tab-router.js'
+import consts from './consts.js'
 
 export default {
 	name: 'tab-router-view',
@@ -135,12 +136,13 @@ export default {
 			}
 		},
 		createNewTab (route, {tabName, tabTitle, cacheType}) {
-			let { path, query, fullPath, meta, matched, params } = route
+			let { path, query, fullPath, matched, params } = route
 
 			let matchedRoute = matched ? matched[matched.length - 1] : null
 			if (!matchedRoute) {
 				throw new Error('路由缺失，请补全！')
 			}
+			let meta = matchedRoute.meta
 			let tabItem = {
 				name: tabName,
 				path,
@@ -148,7 +150,7 @@ export default {
 				params,
 				fullPath,
 				title: tabTitle || meta.tabTitle || '无标题',
-				cacheType,
+				cacheType: cacheType || meta.cacheType || consts.default.cacheType,
 				_components: {
 					beforeCreate () {
 						// 定义响应式数据

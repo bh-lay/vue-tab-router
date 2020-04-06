@@ -10,7 +10,7 @@ Object.defineProperty(tabPreStorage, 'next', {
 			cacheType: ''
 		}
 		this.data = null
-		data.cacheType = (data.cacheType || '').match(/^(nocache|keep-alive|alive)$/) ? data.cacheType : 'keep-alive'
+		data.cacheType = (data.cacheType || '').match(/^(nocache|keep-alive|alive)$/) ? data.cacheType : ''
 		return data
 	}
 })

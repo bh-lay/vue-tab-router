@@ -45,7 +45,8 @@ export default new Router({
 			name: 'mail-editor',
 			component: MailEditor,
 			meta: {
-				tabTitle: '写信'
+				tabTitle: '写信',
+				cacheType: 'alive'
 			}
 		}
 	]

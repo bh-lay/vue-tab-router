@@ -1,6 +1,6 @@
-// thanks to https://github.com/vuejs/vue-router/blob/v3.1.6/src/components/link.js
 import {setNextData} from './tab-pre-storage.js'
 
+// thanks to https://github.com/vuejs/vue-router/blob/v3.1.6/src/components/link.js
 function guardEvent (e) {
 	if (e.metaKey || e.altKey || e.ctrlKey || e.shiftKey) return
 	if (e.defaultPrevented) return
