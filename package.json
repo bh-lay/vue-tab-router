@@ -1,5 +1,5 @@
 {
-  "name": "vue-tab-router-2",
+  "name": "vue-tab-router",
   "version": "1.0.1",
   "description": "一款基于 Vue 的 Tab 页面管理组件。",
   "main": "./dist/index.js",
