@@ -25,7 +25,11 @@ a
 <template>
 	<div id="app">
 		<Navigation/>
-		<tab-router-view />
+		<tab-router-view>
+			<template v-slot:tab-title="scope">
+				{{scope.tab.cacheType}}-{{scope.tab.title}}
+			</template>
+		</tab-router-view>
 	</div>
 </template>
 

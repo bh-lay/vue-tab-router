@@ -22,6 +22,8 @@ export default {
 	},
 	render (h) {
 		let tabListVnode = this.list.map((item, index) => {
+			let titleSlot = this.$parent.$scopedSlots['tab-title']
+
 			return h(
 				'tab-router-link',
 				{
@@ -38,7 +40,13 @@ export default {
 						{
 							class: 'tab-body'
 						},
-						[item.title]
+						[
+							titleSlot
+								? titleSlot({
+									tab: item
+								})
+								: item.title
+						]
 					),
 					h(
 						'span',
