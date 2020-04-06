@@ -3,7 +3,9 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import vueTabRouter from './vue-tab-router/index.js'
+// import vueTabRouter from './vue-tab-router/index.js'
+import vueTabRouter from 'vue-tab-router'
+
 
 Vue.config.productionTip = false
 

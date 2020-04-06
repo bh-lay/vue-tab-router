@@ -1,4 +1,3 @@
-import Vue from 'vue'
 import './style.styl'
 import tabList from './tab-bar.js'
 import tabPreStorage from './tab-pre-storage.js'
@@ -154,6 +153,7 @@ export default {
 				_components: {
 					beforeCreate () {
 						// 定义响应式数据
+						let Vue = this.constructor.super
 						Vue.util.defineReactive(this, '$tabRoute', tabItem)
 						this.$tabRouter = new TabRouter(tabItem, this.$router)
 					},
